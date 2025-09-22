@@ -1,0 +1,24 @@
+{
+    "name": "Мониторинг формы входа",
+    "type": "synthetic",
+    "interval": 300,
+    "timeout": 30,
+    "parameters": {
+        "regions": [
+            "RU, Moscow"
+        ],
+        "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('тест формы входа', async ({ page }) => {\n  // Переходим на страницу входа\n  await page.goto(process.env.LOGIN_URL);\n  \n  // Вводим логин и пароль из переменных окружения\n  await page.locator('input[name=\"username\"]').fill(process.env.LOGIN_USER);\n  await page.locator('input[name=\"password\"]').fill(process.env.LOGIN_PASSWORD);\n  \n  // Нажимаем кнопку входа\n  await page.locator('button[type=\"submit\"]').click();\n  \n  // Ждём перенаправления и проверяем, что на странице появился элемент после авторизации\n  await page.waitForURL(process.env.DASHBOARD_URL);\n  await expect(page.locator('h1')).toHaveText('Панель управления');\n  \n  console.log('Авторизация прошла успешно');\n});"
+    },
+    "marketplace": {
+        "tags": [
+            "авторизация",
+            "форма-входа",
+            "доступность",
+            "безопасность"
+        ],
+        "name": "Мониторинг формы входа",
+        "description": "Имитирует процесс входа пользователя, используя Playwright, и проверяет успешную авторизацию.",
+        "secrets": true
+    }
+}
+

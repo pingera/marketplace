@@ -1,0 +1,25 @@
+{
+  "active": true,
+  "interval": 60,
+  "name": "Простейшая проверка GET API",
+  "parameters": {
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\nconst apiUrl = process.env.API_URL || 'https://api.pingera.ru';\n\ntest('Проверка доступности API', async ({ request }) => {\n  const response = await test.step(`Отправка GET-запроса на ${apiUrl}`, async () => {\n    return await request.get(apiUrl);\n  });\n\n  await test.step('Проверка статуса ответа', async () => {\n    expect(response.status()).toBe(200);\n    console.log(`API доступно. Статус ответа: ${response.status()}`);\n  });\n});",
+    "regions": [
+      "RU, Moscow"
+    ],
+    "retry_enabled": true
+  },
+  "timeout": 15,
+  "type": "multistep",
+  "marketplace": {
+    "tags": [
+      "api",
+      "доступность",
+      "простота",
+      "http"
+    ],
+    "name": "Простейший GET API-мониторинг",
+    "description": "Отправляет простой GET-запрос к API-эндпоинту и проверяет, что он возвращает код 200. Использует переменную окружения для URL.",
+    "secrets": true
+  }
+}

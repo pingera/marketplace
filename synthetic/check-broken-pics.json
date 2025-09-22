@@ -1,0 +1,23 @@
+{
+  "name": "Проверка битых изображений",
+  "type": "synthetic",
+  "interval": 3600,
+  "timeout": 30,
+  "parameters": {
+    "regions": [
+      "RU, Moscow",
+      "EU, West"
+    ],
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('тест битых картинок', async ({ page, request }) => {\n  // Переходим на главную страницу\n  await page.goto('https://pingera.ru');\n  \n  // Ждём, пока все изображения загрузятся\n  await page.waitForSelector('img');\n  \n  // Получаем список всех изображений на странице\n  const images = await page.$$('img');\n  \n  // Перебираем каждое изображение и проверяем его доступность\n  for (const img of images) {\n    const src = await img.getAttribute('src');\n    if (src && src.startsWith('http')) {\n      const response = await request.head(src);\n      expect(response.status()).toBe(200);\n      console.log(`Изображение ${src} доступно.`);\n    }\n  }\n  \n  console.log('Все изображения на странице проверены и доступны.');\n});"
+  },
+  "marketplace": {
+    "tags": [
+      "изображения",
+      "ошибки",
+      "контент",
+      "битые-ссылки"
+    ],
+    "name": "Проверка битых изображений",
+    "description": "Сканирует веб-страницу на наличие битых или недоступных изображений."
+  }
+}

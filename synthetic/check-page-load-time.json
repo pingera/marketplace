@@ -1,0 +1,22 @@
+{
+  "name": "Проверка скорости загрузки страницы",
+  "type": "synthetic",
+  "interval": 1800,
+  "timeout": 30,
+  "parameters": {
+    "regions": [
+      "RU, Moscow"
+    ],
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('тест производительности', async ({ page }) => {\n  // Замеряем время начала загрузки\n  const startTime = Date.now();\n  \n  // Переходим на страницу и ждём полной загрузки\n  await page.goto('https://pingera.ru');\n  await page.waitForLoadState('domcontentloaded');\n  \n  // Замеряем время окончания загрузки\n  const endTime = Date.now();\n  const loadTime = endTime - startTime;\n  \n  console.log(`Страница загрузилась за ${loadTime} мс`);\n  \n  // Проверяем, что время загрузки не превышает 5 секунд (5000 мс)\n  expect(loadTime).toBeLessThan(5000);\n  \n  console.log('Страница загрузилась с приемлемой скоростью');\n});"
+  },
+  "marketplace": {
+    "tags": [
+      "производительность",
+      "скорость-загрузки",
+      "время-ответа",
+      "метрики"
+    ],
+    "name": "Проверка скорости загрузки страницы",
+    "description": "Измеряет время загрузки страницы и проверяет, что оно не превышает заданный лимит."
+  }
+}

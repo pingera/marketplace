@@ -1,0 +1,21 @@
+{
+  "name": "Простой мониторинг скриншотов",
+  "type": "synthetic",
+  "interval": 1800,
+  "timeout": 30,
+  "parameters": {
+    "regions": [
+      "RU, Moscow"
+    ],
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('простой скриншот', async ({ page }) => {\n  // Переходим на указанную страницу\n  await page.goto('https://pingera.ru');\n  \n  // Ждём полной загрузки страницы\n  await page.waitForLoadState('load');\n  \n  // Делаем полностраничный скриншот\n  await page.screenshot({ \n    path: 'website-screenshot.png', \n    fullPage: true \n  });\n  \n  // Проверяем, что страница загрузилась успешно\n  await expect(page).toHaveTitle(/Pingera/);\n  \n  console.log('Скриншот успешно сделан.');\n});"
+  },
+  "marketplace": {
+    "tags": [
+      "скриншот",
+      "визуальный-мониторинг",
+      "доступность"
+    ],
+    "name": "Простой мониторинг скриншотов",
+    "description": "Самая простая проверка, которая делает полностраничный скриншот сайта."
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Мониторинг динамического контента",
+  "type": "synthetic",
+  "interval": 300,
+  "timeout": 30,
+  "parameters": {
+    "regions": [
+      "RU, Moscow",
+      "US, East coast"
+    ],
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('тест загрузки динамического элемента', async ({ page }) => {\n  // Переходим на страницу, где есть динамический контент\n  await page.goto('https://pingera.ru/features');\n  \n  // Ждём, пока загрузится элемент с классом .features-list\n  // Playwright автоматически ждёт, пока элемент станет видимым, что удобно для динамического контента\n  await page.waitForSelector('.features-list');\n  \n  // После того как элемент появился, проверяем, что он содержит хотя бы один дочерний элемент\n  const featureItems = page.locator('.features-list .feature-item');\n  await expect(featureItems).toHaveCount(expect.toBeGreaterThanOrEqual(1));\n  \n  console.log('Динамический контент успешно загружен и отображается.');\n});"
+  },
+  "marketplace": {
+    "tags": [
+      "динамический-контент",
+      "ajax",
+      "react",
+      "vue"
+    ],
+    "name": "Мониторинг динамического контента",
+    "description": "Проверяет, что определённый элемент, подгружаемый асинхронно, успешно появился на странице."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "active": true,
+  "interval": 900,
+  "name": "Жизненный цикл инцидента",
+  "parameters": {
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\nconst baseUrl = 'https://api.pingera.ru/v1';\nconst pageId = process.env.PINGERA_PAGE_ID;\nconst headers = {\n  'Authorization': process.env.PINGERA_API_KEY,\n  'Content-Type': 'application/json'\n};\n\ntest('Создание, обновление и удаление инцидента', async ({ request }) => {\n  let incidentId;\n\n  await test.step('Создание нового инцидента', async () => {\n    const response = await request.post(`${baseUrl}/pages/${pageId}/incidents`, {\n      headers,\n      data: {\n        name: `Тестовый инцидент - ${Date.now()}`,\n        status: 'investigating',\n        impact: 'minor',\n        body: 'Мы расследуем проблему...'\n      }\n    });\n    expect(response.ok()).toBe(true);\n    const incident = await response.json();\n    incidentId = incident.id;\n    expect(incidentId).toBeDefined();\n    console.log(`Инцидент успешно создан с ID: ${incidentId}`);\n  });\n\n  await test.step('Обновление статуса инцидента', async () => {\n    const response = await request.patch(`${baseUrl}/pages/${pageId}/incidents/${incidentId}`, {\n      headers,\n      data: {\n        status: 'resolved',\n        body: 'Проблема решена.'\n      }\n    });\n    expect(response.ok()).toBe(true);\n    const updatedIncident = await response.json();\n    expect(updatedIncident.status).toBe('resolved');\n    console.log(`Инцидент ${incidentId} успешно обновлён до resolved.`);\n  });\n\n  await test.step('Удаление инцидента', async () => {\n    const response = await request.delete(`${baseUrl}/pages/${pageId}/incidents/${incidentId}`, { headers });\n    expect(response.status()).toBe(204);\n    console.log(`Инцидент ${incidentId} успешно удалён.`);\n  });\n});",
+    "regions": [
+      "RU, Moscow"
+    ],
+    "retry_enabled": true
+  },
+  "timeout": 30,
+  "type": "multistep",
+  "marketplace": {
+    "tags": [
+      "инциденты",
+      "статус-страница",
+      "управление-инцидентами",
+      "api"
+    ],
+    "name": "Жизненный цикл инцидента",
+    "description": "Проверяет создание, обновление и удаление инцидента на статус-странице. Требует наличия секретов.",
+    "secrets": true
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Мониторинг поиска на сайте",
+  "type": "synthetic",
+  "interval": 900,
+  "timeout": 30,
+  "parameters": {
+    "regions": [
+      "RU, Moscow",
+      "IN, Mumbai",
+      "QA, Doha"
+    ],
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('тест поиска', async ({ page }) => {\n  // Переходим на страницу с поиском\n  await page.goto('https://pingera.ru/blog');\n  \n  // Ищем поле поиска и вводим запрос\n  await page.locator('input[placeholder=\"Поиск...\"]').fill('мониторинг');\n  await page.locator('input[placeholder=\"Поиск...\"]').press('Enter');\n  \n  // Ждём загрузки результатов поиска\n  await page.waitForLoadState('domcontentloaded');\n  \n  // Проверяем, что отобразилось не менее 1 результата\n  const searchResults = page.locator('.search-results .result-item');\n  await expect(searchResults).toHaveCount(expect.toBeGreaterThanOrEqual(1));\n  \n  console.log('Поиск работает корректно, найдены результаты');\n});"
+  },
+  "marketplace": {
+    "tags": [
+      "поиск",
+      "пользовательский-путь",
+      "функциональность",
+      "веб-приложение"
+    ],
+    "name": "Мониторинг поиска на сайте",
+    "description": "Имитирует поиск на сайте и проверяет, что результаты отображаются."
+  }
+}

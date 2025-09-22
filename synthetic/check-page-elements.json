@@ -1,0 +1,23 @@
+{
+  "name": "Проверка ключевых элементов на странице",
+  "type": "synthetic",
+  "interval": 120,
+  "timeout": 20,
+  "parameters": {
+    "regions": [
+      "RU, Moscow",
+      "EU, West"
+    ],
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('проверка элементов на главной', async ({ page }) => {\n  // Переходим на главную страницу\n  await page.goto('https://pingera.ru');\n  \n  // Проверяем, что заголовок h1 виден\n  await expect(page.locator('h1')).toBeVisible();\n  \n  // Проверяем, что кнопка с текстом 'Начать' видна и активна\n  await expect(page.locator('button:has-text(\"Начать\")')).toBeEnabled();\n  \n  // Проверяем наличие футера\n  await expect(page.locator('footer')).toBeVisible();\n  \n  console.log('Все ключевые элементы на странице присутствуют');\n});"
+  },
+  "marketplace": {
+    "tags": [
+      "доступность",
+      "элементы-страницы",
+      "ui-monitoring",
+      "веб-сайт"
+    ],
+    "name": "Проверка ключевых элементов на странице",
+    "description": "Проверяет наличие и видимость ключевых элементов на веб-странице."
+  }
+}

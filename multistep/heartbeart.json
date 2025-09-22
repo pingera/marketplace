@@ -1,0 +1,26 @@
+{
+  "active": true,
+  "interval": 300,
+  "name": "Проверка Heartbeat API",
+  "parameters": {
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\nconst baseUrl = 'https://api.pingera.ru/v1';\n\ntest('Отправка пинга и проверка статуса Heartbeat', async ({ request }) => {\n  const checkId = process.env.HEARTBEAT_CHECK_ID;\n\n  await test.step('Отправка пинга', async () => {\n    const response = await request.post(`${baseUrl}/heartbeats/${checkId}/ping`, {\n      data: {\n        status: 'ok',\n        message: 'Heartbeat sent successfully.'\n      }\n    });\n    expect(response.ok()).toBe(true);\n    console.log('Пинг успешно отправлен.');\n  });\n\n  await test.step('Проверка статуса Heartbeat', async () => {\n    // Даём системе время на обработку пинга\n    await page.waitForTimeout(5000);\n    \n    const response = await request.get(`${baseUrl}/heartbeats/${checkId}`, {\n      headers: {\n        'Authorization': process.env.PINGERA_API_KEY\n      }\n    });\n    expect(response.ok()).toBe(true);\n    const checkDetails = await response.json();\n    expect(checkDetails.status).toBe('up');\n    expect(checkDetails.last_ping_at).toBeDefined();\n    console.log(`Статус Heartbeat-чека: ${checkDetails.status}`);\n  });\n});",
+    "regions": [
+      "RU, Moscow"
+    ],
+    "retry_enabled": true
+  },
+  "timeout": 30,
+  "type": "multistep",
+  "marketplace": {
+    "tags": [
+      "heartbeat",
+      "api",
+      "cron",
+      "задачи-по-расписанию",
+      "доступность"
+    ],
+    "name": "Проверка Heartbeat API",
+    "description": "Отправляет пинг на Heartbeat-эндпоинт и проверяет, что статус чека меняется на 'up'. Требует наличия секретов.",
+    "secrets": true
+  }
+}

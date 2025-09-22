@@ -1,0 +1,26 @@
+{
+  "active": true,
+  "interval": 1800,
+  "name": "Проверка API-токенов",
+  "parameters": {
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('CRUD для API-токенов', async ({ request }) => {\n  const headers = {\n    'Authorization': process.env.PINGERA_API_KEY,\n    'Content-Type': 'application/json'\n  };\n\n  let tokenId;\n\n  await test.step('Создание нового токена', async () => {\n    const response = await request.post('https://api.pingera.ru/v1/api-tokens', {\n      headers,\n      data: {\n        name: 'Test Token ' + Date.now()\n      }\n    });\n    expect(response.status()).toBe(201);\n    const tokenData = await response.json();\n    tokenId = tokenData.id;\n    expect(tokenId).toBeDefined();\n    console.log(`Токен успешно создан с ID: ${tokenId}`);\n  });\n\n  await test.step('Проверка наличия токена в списке', async () => {\n    const response = await request.get('https://api.pingera.ru/v1/api-tokens', { headers });\n    expect(response.status()).toBe(200);\n    const tokens = await response.json();\n    const foundToken = tokens.find(t => t.id === tokenId);\n    expect(foundToken).toBeDefined();\n    console.log(`Токен с ID ${tokenId} найден в списке.`);\n  });\n\n  await test.step('Удаление токена', async () => {\n    const response = await request.delete(`https://api.pingera.ru/v1/api-tokens/${tokenId}`, { headers });\n    expect(response.status()).toBe(204);\n    console.log(`Токен с ID ${tokenId} успешно удален.`);\n  });\n});",
+    "regions": [
+      "RU, Moscow"
+    ],
+    "retry_enabled": true
+  },
+  "timeout": 30,
+  "type": "multistep",
+  "marketplace": {
+    "tags": [
+      "api",
+      "crud",
+      "токен",
+      "безопасность",
+      "пользователи"
+    ],
+    "name": "Тестирование API-токенов",
+    "description": "Создает, проверяет и удаляет API-токен для мониторинга работоспособности API аутентификации. Требует наличия секретов.",
+    "secrets": true
+  }
+}

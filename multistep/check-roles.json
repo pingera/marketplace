@@ -1,0 +1,26 @@
+{
+  "active": true,
+  "interval": 86400,
+  "name": "Управление пользователями (Админ)",
+  "parameters": {
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\nconst baseUrl = 'https://api.pingera.ru/v1';\nconst headers = {\n  'Authorization': process.env.PINGERA_ADMIN_API_KEY,\n  'Content-Type': 'application/json'\n};\n\ntest('Приглашение пользователя и обновление его роли', async ({ request }) => {\n  const email = `test_user_${Date.now()}@test.com`;\n  let userId;\n\n  await test.step('Приглашение нового пользователя', async () => {\n    const response = await request.post(`${baseUrl}/users/invite`, {\n      headers,\n      data: {\n        email: email,\n        role: 'viewer'\n      }\n    });\n    expect(response.ok()).toBe(true);\n    console.log(`Пользователь ${email} успешно приглашен.`);\n  });\n\n  await test.step('Получение списка пользователей и поиск нового', async () => {\n    const response = await request.get(`${baseUrl}/users`, { headers });\n    expect(response.ok()).toBe(true);\n    const users = await response.json();\n    const newUser = users.find(u => u.email === email);\n    expect(newUser).toBeDefined();\n    userId = newUser.id;\n    console.log(`Найден новый пользователь с ID: ${userId}`);\n  });\n\n  await test.step('Обновление роли пользователя', async () => {\n    const response = await request.patch(`${baseUrl}/users/${userId}`, {\n      headers,\n      data: {\n        role: 'editor'\n      }\n    });\n    expect(response.ok()).toBe(true);\n    const updatedUser = await response.json();\n    expect(updatedUser.role).toBe('editor');\n    console.log(`Роль пользователя ${userId} успешно обновлена до editor.`);\n  });\n  \n  // Очистка: удаление созданного пользователя\n  await test.step('Удаление пользователя', async () => {\n    const response = await request.delete(`${baseUrl}/users/${userId}`, { headers });\n    expect(response.status()).toBe(204);\n    console.log(`Пользователь ${userId} успешно удален.`);\n  });\n});",
+    "regions": [
+      "RU, Moscow"
+    ],
+    "retry_enabled": true
+  },
+  "timeout": 30,
+  "type": "multistep",
+  "marketplace": {
+    "tags": [
+      "пользователи",
+      "админ",
+      "права-доступа",
+      "роли",
+      "бизнес-процесс"
+    ],
+    "name": "Тестирование ролей пользователей",
+    "description": "Тестирует приглашение нового пользователя и изменение его роли. Требует прав администратора и наличия секретов.",
+    "secrets": true
+  }
+}
