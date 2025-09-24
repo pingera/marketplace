@@ -64,7 +64,7 @@ curl -X POST \
 
 **Установка CLI:**
 ```bash
-npm install -g @pingera/cli
+pip install pingera-cli
 ```
 
 **Создание регулярной проверки:**
@@ -183,13 +183,13 @@ pngr secrets create --name "SECRET_NAME" --value "SECRET_VALUE"
 | 💼 [**app.pingera.ru**](https://app.pingera.ru) | Веб-приложение для управления |
 | 📚 [**docs.pingera.ru**](https://docs.pingera.ru) | Документация и руководства |
 | 🔗 [**API Docs**](https://docs.pingera.ru/api) | Справочник по API |
-| ⚡ [**CLI Guide**](https://docs.pingera.ru/devs/cli) | Руководство по командной строке |
+| ⚡ [**CLI Guide**](https://docs.pingera.ru/devs/cli) | Руководство по работе с CLI |
 | 🔐 [**Секреты**](https://docs.pingera.ru/checks/secrets) | Работа с конфиденциальными данными |
 
 ---
 
 <div align="center">
 
-**🚀 Начните мониторинг уже сегодня с [Pingera](https://pingera.ru)!**
+**🚀 Замониторь за 30 секунд с [Pingera](https://pingera.ru)!**
 
 </div>
