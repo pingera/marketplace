@@ -175,6 +175,20 @@
 2. Откройте раздел [**"Настройки" → "API ключи"**](https://app.pingera.ru/settings/tokens)
 3. Нажмите "Создать новый токен"
 
+### ⚡ Дополнительные возможности CLI
+
+**Сокращенные флаги:** Вы можете использовать как `--from-file`, так и `-f`:
+```bash
+pngr checks create -f папка/check.json
+pngr checks run custom -f папка/check.json
+```
+
+**Удаленные файлы:** CLI поддерживает загрузку файлов по URL:
+```bash
+pngr checks create -f https://raw.githubusercontent.com/pingera/marketplace/refs/heads/main/multistep/simple.json
+pngr checks run custom -f https://raw.githubusercontent.com/pingera/marketplace/refs/heads/main/synthetic/simple-screenshot.json
+```
+
 ### 🔐 Работа с секретами
 
 Некоторые проверки требуют использования [Секретов](https://docs.pingera.ru/checks/secrets). Создайте их заранее через:
