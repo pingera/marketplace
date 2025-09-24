@@ -1,333 +1,211 @@
 # Синтетические проверки
 
+🚀 **Эти скрипты предназначены для использования в [Платформе Pingera](https://pingera.ru)**
+
+- **Приложение:** [app.pingera.ru](https://app.pingera.ru) - создание и управление проверками
+- **Сайт:** [pingera.ru](https://pingera.ru) - общая информация о платформе
+- **Документация:** [docs.pingera.ru](https://docs.pingera.ru) - подробная документация по API и CLI
+
+## 🎭 О синтетических проверках
+
 Этот раздел содержит шаблоны синтетических проверок (synthetic checks), которые используют Playwright для тестирования веб-интерфейсов и пользовательских сценариев.
 
-Синтетические проверки позволяют:
-- Тестировать пользовательские сценарии
-- Проверять загрузку страниц
-- Делать скриншоты для визуального мониторинга
-- Проверять работу форм и элементов интерфейса
+**Возможности:**
+- ✅ Тестирование пользовательских сценариев
+- ✅ Проверка загрузки страниц
+- ✅ Создание скриншотов для визуального мониторинга
+- ✅ Проверка работы форм и элементов интерфейса
 
-## Доступные проверки
+## 📋 Содержание
 
-### Проверка битых изображений
+- [Проверка битых изображений](#checkbrokenpics)
+- [Проверка ключевых элементов на странице](#checkpageelements)
+- [Проверка скорости загрузки страницы](#checkpageloadtime)
+- [Мониторинг поиска на сайте](#checksearchonweb)
+- [Мониторинг формы входа](#loginform)
+- [Простой мониторинг скриншотов](#simplescreenshot)
+- [Мониторинг динамического контента](#waitfordynamiccontent)
 
-**Файл:** `check-broken-pics.json`
+---
+
+### Проверка битых изображений {#checkbrokenpics}
+
+| Параметр | Значение |
+|----------|----------|
+| **Файл** | `check-broken-pics.json` |
+| **Тип проверки** | synthetic |
+| **Интервал** | 3600 сек |
+| **Таймаут** | 30 сек |
+| **Теги** | изображения, ошибки, контент, битые-ссылки |
 
 **Описание:** Сканирует веб-страницу на наличие битых или недоступных изображений.
 
-**Тип проверки:** synthetic
+#### Команды для использования
 
-**Интервал:** 3600 секунд
+| Метод | Создание регулярной проверки | Единоразовый запуск |
+|-------|------------------------------|---------------------|
+| **cURL** | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/check-broken-pics.json https://api.pingera.ru/v1/checks` | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/check-broken-pics.json https://api.pingera.ru/v1/checks/execute` |
+| **Pingera CLI** | `pngr checks create --from-file synthetic/check-broken-pics.json` | `pngr checks run custom --from-file synthetic/check-broken-pics.json` |
 
-**Таймаут:** 30 секунд
+### Проверка ключевых элементов на странице {#checkpageelements}
 
-**Теги:** изображения, ошибки, контент, битые-ссылки
-
-**Использование с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/check-broken-pics.json \
-  https://api.pingera.ru/v1/checks
-```
-
-**Использование с Pingera CLI:**
-```bash
-pngr checks create --from-file synthetic/check-broken-pics.json
-```
-
-**Единоразовый запуск с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/check-broken-pics.json \
-  https://api.pingera.ru/v1/checks/execute
-```
-
-**Единоразовый запуск с Pingera CLI:**
-```bash
-pngr checks run custom --from-file synthetic/check-broken-pics.json
-```
-
-### Проверка ключевых элементов на странице
-
-**Файл:** `check-page-elements.json`
+| Параметр | Значение |
+|----------|----------|
+| **Файл** | `check-page-elements.json` |
+| **Тип проверки** | synthetic |
+| **Интервал** | 120 сек |
+| **Таймаут** | 20 сек |
+| **Теги** | доступность, элементы-страницы, ui-monitoring, веб-сайт |
 
 **Описание:** Проверяет наличие и видимость ключевых элементов на веб-странице.
 
-**Тип проверки:** synthetic
+#### Команды для использования
 
-**Интервал:** 120 секунд
+| Метод | Создание регулярной проверки | Единоразовый запуск |
+|-------|------------------------------|---------------------|
+| **cURL** | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/check-page-elements.json https://api.pingera.ru/v1/checks` | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/check-page-elements.json https://api.pingera.ru/v1/checks/execute` |
+| **Pingera CLI** | `pngr checks create --from-file synthetic/check-page-elements.json` | `pngr checks run custom --from-file synthetic/check-page-elements.json` |
 
-**Таймаут:** 20 секунд
+### Проверка скорости загрузки страницы {#checkpageloadtime}
 
-**Теги:** доступность, элементы-страницы, ui-monitoring, веб-сайт
-
-**Использование с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/check-page-elements.json \
-  https://api.pingera.ru/v1/checks
-```
-
-**Использование с Pingera CLI:**
-```bash
-pngr checks create --from-file synthetic/check-page-elements.json
-```
-
-**Единоразовый запуск с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/check-page-elements.json \
-  https://api.pingera.ru/v1/checks/execute
-```
-
-**Единоразовый запуск с Pingera CLI:**
-```bash
-pngr checks run custom --from-file synthetic/check-page-elements.json
-```
-
-### Проверка скорости загрузки страницы
-
-**Файл:** `check-page-load-time.json`
+| Параметр | Значение |
+|----------|----------|
+| **Файл** | `check-page-load-time.json` |
+| **Тип проверки** | synthetic |
+| **Интервал** | 1800 сек |
+| **Таймаут** | 30 сек |
+| **Теги** | производительность, скорость-загрузки, время-ответа, метрики |
 
 **Описание:** Измеряет время загрузки страницы и проверяет, что оно не превышает заданный лимит.
 
-**Тип проверки:** synthetic
+#### Команды для использования
 
-**Интервал:** 1800 секунд
+| Метод | Создание регулярной проверки | Единоразовый запуск |
+|-------|------------------------------|---------------------|
+| **cURL** | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/check-page-load-time.json https://api.pingera.ru/v1/checks` | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/check-page-load-time.json https://api.pingera.ru/v1/checks/execute` |
+| **Pingera CLI** | `pngr checks create --from-file synthetic/check-page-load-time.json` | `pngr checks run custom --from-file synthetic/check-page-load-time.json` |
 
-**Таймаут:** 30 секунд
+### Мониторинг поиска на сайте {#checksearchonweb}
 
-**Теги:** производительность, скорость-загрузки, время-ответа, метрики
-
-**Использование с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/check-page-load-time.json \
-  https://api.pingera.ru/v1/checks
-```
-
-**Использование с Pingera CLI:**
-```bash
-pngr checks create --from-file synthetic/check-page-load-time.json
-```
-
-**Единоразовый запуск с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/check-page-load-time.json \
-  https://api.pingera.ru/v1/checks/execute
-```
-
-**Единоразовый запуск с Pingera CLI:**
-```bash
-pngr checks run custom --from-file synthetic/check-page-load-time.json
-```
-
-### Мониторинг поиска на сайте
-
-**Файл:** `check-search-on-web.json`
+| Параметр | Значение |
+|----------|----------|
+| **Файл** | `check-search-on-web.json` |
+| **Тип проверки** | synthetic |
+| **Интервал** | 900 сек |
+| **Таймаут** | 30 сек |
+| **Теги** | поиск, пользовательский-путь, функциональность, веб-приложение |
 
 **Описание:** Имитирует поиск на сайте и проверяет, что результаты отображаются.
 
-**Тип проверки:** synthetic
+#### Команды для использования
 
-**Интервал:** 900 секунд
+| Метод | Создание регулярной проверки | Единоразовый запуск |
+|-------|------------------------------|---------------------|
+| **cURL** | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/check-search-on-web.json https://api.pingera.ru/v1/checks` | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/check-search-on-web.json https://api.pingera.ru/v1/checks/execute` |
+| **Pingera CLI** | `pngr checks create --from-file synthetic/check-search-on-web.json` | `pngr checks run custom --from-file synthetic/check-search-on-web.json` |
 
-**Таймаут:** 30 секунд
+### Мониторинг формы входа {#loginform}
 
-**Теги:** поиск, пользовательский-путь, функциональность, веб-приложение
-
-**Использование с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/check-search-on-web.json \
-  https://api.pingera.ru/v1/checks
-```
-
-**Использование с Pingera CLI:**
-```bash
-pngr checks create --from-file synthetic/check-search-on-web.json
-```
-
-**Единоразовый запуск с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/check-search-on-web.json \
-  https://api.pingera.ru/v1/checks/execute
-```
-
-**Единоразовый запуск с Pingera CLI:**
-```bash
-pngr checks run custom --from-file synthetic/check-search-on-web.json
-```
-
-### Мониторинг формы входа
-
-**Файл:** `login-form.json`
+| Параметр | Значение |
+|----------|----------|
+| **Файл** | `login-form.json` |
+| **Тип проверки** | synthetic |
+| **Интервал** | 300 сек |
+| **Таймаут** | 30 сек |
+| **Теги** | авторизация, форма-входа, доступность, безопасность |
+| **Требует секреты** | ⚠️ Да |
 
 **Описание:** Имитирует процесс входа пользователя, используя Playwright, и проверяет успешную авторизацию.
 
-**Тип проверки:** synthetic
-
-**Интервал:** 300 секунд
-
-**Таймаут:** 30 секунд
-
-**Теги:** авторизация, форма-входа, доступность, безопасность
-
 ⚠️ **Внимание:** Для этой проверки требуется создание секретов в приложении перед использованием.
 
-**Использование с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/login-form.json \
-  https://api.pingera.ru/v1/checks
-```
+#### Команды для использования
 
-**Использование с Pingera CLI:**
-```bash
-pngr checks create --from-file synthetic/login-form.json
-```
+| Метод | Создание регулярной проверки | Единоразовый запуск |
+|-------|------------------------------|---------------------|
+| **cURL** | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/login-form.json https://api.pingera.ru/v1/checks` | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/login-form.json https://api.pingera.ru/v1/checks/execute` |
+| **Pingera CLI** | `pngr checks create --from-file synthetic/login-form.json` | `pngr checks run custom --from-file synthetic/login-form.json` |
 
-**Единоразовый запуск с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/login-form.json \
-  https://api.pingera.ru/v1/checks/execute
-```
+### Простой мониторинг скриншотов {#simplescreenshot}
 
-**Единоразовый запуск с Pingera CLI:**
-```bash
-pngr checks run custom --from-file synthetic/login-form.json
-```
-
-### Простой мониторинг скриншотов
-
-**Файл:** `simple-screenshot.json`
+| Параметр | Значение |
+|----------|----------|
+| **Файл** | `simple-screenshot.json` |
+| **Тип проверки** | synthetic |
+| **Интервал** | 1800 сек |
+| **Таймаут** | 30 сек |
+| **Теги** | скриншот, визуальный-мониторинг, доступность |
 
 **Описание:** Самая простая проверка, которая делает полностраничный скриншот сайта.
 
-**Тип проверки:** synthetic
+#### Команды для использования
 
-**Интервал:** 1800 секунд
+| Метод | Создание регулярной проверки | Единоразовый запуск |
+|-------|------------------------------|---------------------|
+| **cURL** | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/simple-screenshot.json https://api.pingera.ru/v1/checks` | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/simple-screenshot.json https://api.pingera.ru/v1/checks/execute` |
+| **Pingera CLI** | `pngr checks create --from-file synthetic/simple-screenshot.json` | `pngr checks run custom --from-file synthetic/simple-screenshot.json` |
 
-**Таймаут:** 30 секунд
+### Мониторинг динамического контента {#waitfordynamiccontent}
 
-**Теги:** скриншот, визуальный-мониторинг, доступность
-
-**Использование с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/simple-screenshot.json \
-  https://api.pingera.ru/v1/checks
-```
-
-**Использование с Pingera CLI:**
-```bash
-pngr checks create --from-file synthetic/simple-screenshot.json
-```
-
-**Единоразовый запуск с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/simple-screenshot.json \
-  https://api.pingera.ru/v1/checks/execute
-```
-
-**Единоразовый запуск с Pingera CLI:**
-```bash
-pngr checks run custom --from-file synthetic/simple-screenshot.json
-```
-
-### Мониторинг динамического контента
-
-**Файл:** `wait-for-dynamic-content.json`
+| Параметр | Значение |
+|----------|----------|
+| **Файл** | `wait-for-dynamic-content.json` |
+| **Тип проверки** | synthetic |
+| **Интервал** | 300 сек |
+| **Таймаут** | 30 сек |
+| **Теги** | динамический-контент, ajax, react, vue |
 
 **Описание:** Проверяет, что определённый элемент, подгружаемый асинхронно, успешно появился на странице.
 
-**Тип проверки:** synthetic
+#### Команды для использования
 
-**Интервал:** 300 секунд
+| Метод | Создание регулярной проверки | Единоразовый запуск |
+|-------|------------------------------|---------------------|
+| **cURL** | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/wait-for-dynamic-content.json https://api.pingera.ru/v1/checks` | `curl -X POST -H "Authorization: ВАШ_ТОКЕН" -H "Content-Type: application/json" -d @synthetic/wait-for-dynamic-content.json https://api.pingera.ru/v1/checks/execute` |
+| **Pingera CLI** | `pngr checks create --from-file synthetic/wait-for-dynamic-content.json` | `pngr checks run custom --from-file synthetic/wait-for-dynamic-content.json` |
 
-**Таймаут:** 30 секунд
+---
 
-**Теги:** динамический-контент, ajax, react, vue
+## 📚 Справочная информация
 
-**Использование с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/wait-for-dynamic-content.json \
-  https://api.pingera.ru/v1/checks
-```
+### 🔑 Получение API токена
 
-**Использование с Pingera CLI:**
-```bash
-pngr checks create --from-file synthetic/wait-for-dynamic-content.json
-```
+Для работы с API вам понадобится **API токен**. Создайте его в личном кабинете:
+1. Перейдите в [app.pingera.ru](https://app.pingera.ru)
+2. Откройте раздел [**"Настройки" → "API ключи"**](https://app.pingera.ru/settings/tokens)
+3. Нажмите "Создать новый токен"
 
-**Единоразовый запуск с cURL:**
-```bash
-curl -X POST \
-  -H "Authorization: ВАШ_ТОКЕН" \
-  -H "Content-Type: application/json" \
-  -d @synthetic/wait-for-dynamic-content.json \
-  https://api.pingera.ru/v1/checks/execute
-```
+### 🔐 Работа с секретами
 
-**Единоразовый запуск с Pingera CLI:**
-```bash
-pngr checks run custom --from-file synthetic/wait-for-dynamic-content.json
-```
+Некоторые проверки требуют использования [Секретов](https://docs.pingera.ru/checks/secrets). Создайте их заранее через:
 
-## Общая информация
+**Веб-интерфейс:**
+1. [app.pingera.ru](https://app.pingera.ru) → "Секреты"
+2. Нажмите "Создать секрет"
 
-### Получение API токена
-
-Для работы с API вам понадобится **API токен**. Вы можете создать его в личном кабинете, в разделе [**"Настройки" -> "API ключи"**](https://app.pingera.ru/settings/tokens).
-
-### Работа с секретами
-
-Некоторые проверки требуют использования [Секретов](https://docs.pingera.ru/checks/secrets). Вы можете создать их заранее через веб-интерфейс, API или CLI:
-
+**CLI:**
 ```bash
 pngr secrets create --name "SECRET_NAME" --value "SECRET_VALUE"
 ```
 
-### Регионы выполнения
+### 🌍 Регионы выполнения
 
 Большинство проверок настроены для выполнения из следующих регионов:
-- `RU, Moscow` - Москва, Россия
-- `EU, West` - Западная Европа
-- `US, East coast` - Восточное побережье США
-- `IN, Mumbai` - Мумбаи, Индия
-- `QA, Doha` - Доха, Катар
+
+| Регион | Описание |
+|--------|----------|
+| `RU, Moscow` | Москва, Россия |
+| `EU, West` | Западная Европа |
+| `US, East coast` | Восточное побережье США |
+| `IN, Mumbai` | Мумбаи, Индия |
+| `QA, Doha` | Доха, Катар |
 
 Вы можете изменить регионы в конфигурации проверки перед её созданием.
+
+### 📖 Дополнительные ресурсы
+
+- [Документация по API](https://docs.pingera.ru/api)
+- [Руководство по CLI](https://docs.pingera.ru/devs/cli)
+- [Примеры проверок](https://docs.pingera.ru/checks)
+- [Работа с секретами](https://docs.pingera.ru/checks/secrets)
 
