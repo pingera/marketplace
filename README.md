@@ -70,11 +70,22 @@ pip install pingera-cli
 **Создание регулярной проверки:**
 ```bash
 pngr checks create --from-file папка/check.json
+# Можно использовать сокращенный флаг -f
+pngr checks create -f папка/check.json
 ```
 
 **Единоразовый запуск:**
 ```bash
 pngr checks run custom --from-file папка/check.json
+# Можно использовать сокращенный флаг -f
+pngr checks run custom -f папка/check.json
+```
+
+**Поддержка удаленных файлов:**
+```bash
+# Загрузка файла конфигурации по URL
+pngr checks create -f https://raw.githubusercontent.com/pingera/marketplace/refs/heads/main/multistep/simple.json
+pngr checks run custom -f https://raw.githubusercontent.com/pingera/marketplace/refs/heads/main/synthetic/simple-screenshot.json
 ```
 
 ---
