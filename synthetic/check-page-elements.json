@@ -8,7 +8,7 @@
       "RU, Moscow",
       "EU, West"
     ],
-    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('проверка элементов на главной', async ({ page }) => {\n  // Переходим на главную страницу\n  await page.goto('https://pingera.ru');\n  \n  // Проверяем, что заголовок h1 виден\n  await expect(page.locator('h1')).toBeVisible();\n  \n  // Проверяем, что кнопка с текстом 'Начать' видна и активна\n  await expect(page.locator('button:has-text(\"Начать\")')).toBeEnabled();\n  \n  // Проверяем наличие футера\n  await expect(page.locator('footer')).toBeVisible();\n  \n  console.log('Все ключевые элементы на странице присутствуют');\n});"
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('проверка элементов на главной', async ({ page }) => {\n  // Переходим на главную страницу\n  await page.goto('https://pingera.ru');\n  \n  // Проверяем, что заголовок h1 виден\n  await expect(page.locator('h1')).toBeVisible();\n\n  // Проверяем, что ссылка с текстом 'Вход' видна и активна\n  await expect(page.locator('a:has-text(\"Вход\")')).toBeEnabled();\n  \n  // Проверяем наличие футера\n  await expect(page.locator('div.t420')).toBeVisible();\n  \n  console.log('Все ключевые элементы на странице присутствуют');\n});"
   },
   "marketplace": {
     "tags": [

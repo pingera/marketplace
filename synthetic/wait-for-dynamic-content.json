@@ -8,7 +8,7 @@
       "RU, Moscow",
       "US, East coast"
     ],
-    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('тест загрузки динамического элемента', async ({ page }) => {\n  // Переходим на страницу, где есть динамический контент\n  await page.goto('https://pingera.ru/features');\n  \n  // Ждём, пока загрузится элемент с классом .features-list\n  // Playwright автоматически ждёт, пока элемент станет видимым, что удобно для динамического контента\n  await page.waitForSelector('.features-list');\n  \n  // После того как элемент появился, проверяем, что он содержит хотя бы один дочерний элемент\n  const featureItems = page.locator('.features-list .feature-item');\n  await expect(featureItems).toHaveCount(expect.toBeGreaterThanOrEqual(1));\n  \n  console.log('Динамический контент успешно загружен и отображается.');\n});"
+    "pw_script": "const { test, expect } = require('@playwright/test');\n\ntest('тест загрузки динамического элемента', async ({ page }) => {\n  // Переходим на главную страницу\n  await page.goto('https://pingera.ru');\n\n  // Ждём, пока элемент с ID 'rec1160784986' станет видимым\n  await expect(page.locator('#rec1160784986')).toBeVisible();\n\n  // Проверяем, что внутри этого блока есть хотя бы один дочерний элемент\n  const featureItems = page.locator('#rec1160784986 .t-card__col');\n  const count = await featureItems.count();\n  expect(count).toBeGreaterThanOrEqual(1);\n\n  console.log('Динамический контент успешно загружен и отображается.');\n});"
   },
   "marketplace": {
     "tags": [

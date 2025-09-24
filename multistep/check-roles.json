@@ -11,6 +11,9 @@
   },
   "timeout": 30,
   "type": "multistep",
+  "secrets": [
+    {"secret_id": "toskj6ivz9sm", "env_variable": "PINGERA_API_KEY"}
+  ],
   "marketplace": {
     "tags": [
       "пользователи",
