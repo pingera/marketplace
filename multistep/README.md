@@ -213,8 +213,8 @@ pngr secrets create --name "SECRET_NAME" --value "SECRET_VALUE"
 
 ### 📖 Дополнительные ресурсы
 
-- [Документация по API](https://docs.pingera.ru/api)
+- [Документация по API](https://docs.pingera.ru/api/overview)
 - [Руководство по CLI](https://docs.pingera.ru/devs/cli)
-- [Примеры проверок](https://docs.pingera.ru/checks)
+- [Примеры проверок](https://docs.pingera.ru/checks/overview)
 - [Работа с секретами](https://docs.pingera.ru/checks/secrets)
 

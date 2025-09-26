@@ -204,7 +204,7 @@ pngr secrets create --name "SECRET_NAME" --value "SECRET_VALUE"
 | 🏠 [**pingera.ru**](https://pingera.ru) | Главная страница платформы |
 | 💼 [**app.pingera.ru**](https://app.pingera.ru) | Веб-приложение для управления |
 | 📚 [**docs.pingera.ru**](https://docs.pingera.ru) | Документация и руководства |
-| 🔗 [**API Docs**](https://docs.pingera.ru/api) | Справочник по API |
+| 🔗 [**API Docs**](https://docs.pingera.ru/api/overview) | Справочник по API |
 | ⚡ [**CLI Guide**](https://docs.pingera.ru/devs/cli) | Руководство по работе с CLI |
 | 🔐 [**Секреты**](https://docs.pingera.ru/checks/secrets) | Работа с конфиденциальными данными |
 
